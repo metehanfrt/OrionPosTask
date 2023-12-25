@@ -10,9 +10,25 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OrionPosTask.styles.css" asp-append-version="true" />
+    @if (Context.Session.GetString("Theme") == "Dark")
+    {
+        <style>
+            body {
+                background-color: #666
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                document.querySelector("nav").classList.remove('navbar-light');
+                document.querySelector("nav").classList.remove('bg-white');
+                document.querySelector("nav").classList.add('navbar-dark');
+                document.querySelector("nav").classList.add('bg-dark');
+            });
+        </script>
+    }
 </head>
 <body class="btn-dark">
-    
+    <partial name="_Navbar" />
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -25,7 +41,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+   @*  @await RenderSectionAsync("Scripts", required: false) *@
+    @RenderSection("scripts", required: false)
 </body>
 </html>
 

@@ -1,0 +1,142 @@
+﻿@model IEnumerable<OrionPosTask.Models.Data.Directorys>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div id="loadingAnimation" class="loading-animation"></div>
+<br/>
+
+<p>
+    <a asp-action="Create" style="color: white; padding: 8px 16px; background-color: #007bff; border: 1px solid #007bff; border-radius: 4px; text-decoration: none;">Yeni Kayıt</a>
+</p>
+<div class="row">
+    <div class="col-md-5">
+        
+        <form asp-action="Index" method="get" class="d-flex align-items-center">
+            <input type="text" name="searchName" class="form-control" value="@ViewBag.searchName" placeholder="Ad" />
+            <input type="text" name="searchSurname" class="form-control ms-2" value="@ViewBag.searchSurname" placeholder="Soyad" />
+            <input type="text" name="searchTelephone" class="form-control ms-2" value="@ViewBag.searchTelephone" placeholder="Telefon" />
+        </form>
+    </div>
+</div>
+
+<table id="dataTable" class="table" style="width: 80%; height:90%; border-collapse: collapse; margin-bottom: 1rem; color: #fff;">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Telefon</th>
+            <th>Seçenekler</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Surname</td>
+                <td>@item.Telephone</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Düzenle</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detay</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="pagination" class="pagination" style="font-weight: bold; font-size: 20px; color: white;"></div>
+
+
+
+@section Scripts {
+    <script>
+        document.onreadystatechange = function () {
+            if (document.readyState === 'complete') {
+                // Yükleme tamamlandığında loading animasyonunu
+                setTimeout(function () {
+                    document.getElementById('loadingAnimation').style.display = 'none';
+                }, 1500); 
+            }
+        };
+        var data = @Html.Raw(Json.Serialize(Model));
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputs = document.querySelectorAll('input[type="text"]');
+            inputs.forEach(input => {
+                input.addEventListener('input', function (e) {
+                    filterTable();
+                });
+            });
+        });
+
+        function filterTable() {
+            const searchName = document.querySelector('input[name="searchName"]').value.toLowerCase();
+            const searchSurname = document.querySelector('input[name="searchSurname"]').value.toLowerCase();
+            const searchTelephone = document.querySelector('input[name="searchTelephone"]').value.toLowerCase();
+
+            const tableRows = document.querySelectorAll('#tableBody tr');
+            tableRows.forEach(row => {
+                const rowData = row.textContent.toLowerCase() || row.innerText.toLowerCase();
+                const nameMatch = rowData.includes(searchName);
+                const surnameMatch = rowData.includes(searchSurname);
+                const telephoneMatch = rowData.includes(searchTelephone);
+
+                if (nameMatch && surnameMatch && telephoneMatch) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        const itemsPerPage = 5;
+        let currentPage = 1;
+
+        function displayTable(currentPage) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedData = data.slice(startIndex, endIndex);
+          
+            paginatedData.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                                   <td>${item.name}</td>
+                                <td>${item.surname}</td>
+                                <td>${item.telephone}</td>
+                                <td>
+                                    <a href="Directorys/Edit/${item.id}" class="btn btn-secondary">Düzenle</a>
+                                    <a href="Directorys/Details/${item.id}" class="btn btn-info">Detay</a>
+                                    <a href="Directorys/Delete/${item.id}" class="btn btn-danger">Sil</a>
+                                </td>
+                        `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function displayPagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            const pageCount = Math.ceil(data.length / itemsPerPage);
+            for (let i = 1; i <= pageCount; i++) {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = i;
+                link.addEventListener('click', function () {
+                    currentPage = i;
+                    displayTable(currentPage);
+                });
+                pagination.appendChild(link);
+            }
+        }
+
+        displayTable(currentPage);
+        displayPagination();
+    </script>
+}
+ 

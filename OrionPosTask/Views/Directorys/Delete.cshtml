@@ -1,0 +1,43 @@
+﻿@model OrionPosTask.Models.Data.Directorys
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+<div class="card bg-secondary text-light">
+    <h4 class="card-header">Veri Silme Ekranı</h4>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">
+                Ad
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-3">
+                Soyal
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Surname)
+            </dd>
+            <dt class="col-sm-3">
+                Telefon
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Telephone)
+            </dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id"/>
+            <button type="submit" class="btn btn-danger">Sil</button> 
+            <a asp-action="Index" class="btn btn-secondary">Ana Sayfa</a>
+        </form>
+    </div>
+</div>
+
+
+
+

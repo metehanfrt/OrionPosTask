@@ -15,6 +15,11 @@ namespace OrionPosTask.Controllers
 
         public IActionResult Index()
         {
+            var oncekiDeger = HttpContext.Session.GetInt32("Gosterim");
+            if (oncekiDeger == null) oncekiDeger = 0;
+
+            HttpContext.Session.SetInt32("Gosterim", (int)oncekiDeger + 1);
+
             return View();
         }
 
@@ -27,6 +32,13 @@ namespace OrionPosTask.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult ChangeTheme(string theme)
+        {
+            HttpContext.Session.SetString("Theme", theme);
+
+            return Redirect(Request.Headers["Referer"].ToString());
         }
     }
 }

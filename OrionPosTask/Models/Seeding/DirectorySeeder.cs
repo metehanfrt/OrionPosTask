@@ -21,23 +21,24 @@ namespace OrionPosTask.Models.Seeding
                     Id = 2,
                     Name = "Kazım",
                     Surname = "Karabekir",
-                    Telephone = "05555555555"
+                    Telephone = "05455555555"
                 },
                 new Directorys()
                 {
                     Id = 3,
                     Name = "Refet",
                     Surname = "Bele",
-                    Telephone = "05555555555"
+                    Telephone = "05355555555"
                 },
                 new Directorys()
                 {
                     Id = 4,
                     Name = "İlber",
                     Surname = "Ortaylı",
-                    Telephone = "05555555555"
-                },
+                    Telephone = "05255555555"
+                }
             };
+            modelBuilder.Entity<Directorys>().HasData(initialDirectory);
         }
     }
 }

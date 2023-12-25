@@ -21,8 +21,8 @@ namespace OrionPosTask.Models.Data
             new DirectorysMap().Configure(modelBuilder.Entity<Directorys>());
 
             //Model Seeder
-            UserSeeder.SeedData(modelBuilder);
-            DirectorySeeder.SeedData(modelBuilder);
+            //UserSeeder.SeedData(modelBuilder);
+            //DirectorySeeder.SeedData(modelBuilder);
         }
     }
 

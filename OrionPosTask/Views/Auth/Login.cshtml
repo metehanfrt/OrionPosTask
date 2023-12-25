@@ -1,108 +1,16 @@
 ﻿@* Login kullanacağımız için önce seni kullanacağım demeliyim Razor Pages yapısı aslında kısacası*@
-@model LoginModel
+@model User
 
 
-<style>
-    /* Genel sayfa stilleri */
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f8f9fa;
-        color: #333;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
+
+@foreach (var modelState in ViewData.ModelState.Values)
+{
+    foreach (var error in modelState.Errors)
+    {
+        <div class="alert alert-danger">@error.ErrorMessage</div>
     }
+}
 
-    /* Form stilleri */
-    .form-signin {
-        width: 100%;
-        max-width: 400px;
-        padding: 15px;
-        margin: auto;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-signin h1 {
-        font-size: 24px;
-        margin-bottom: 20px;
-        text-align: center;
-        color: #000;
-    }
-
-    .form-signin .form-control {
-        margin-bottom: 15px;
-        border-radius: 4px;
-        border-color: #ccc;
-    }
-
-    .form-signin .btn-primary {
-        padding: 12px 20px;
-        font-weight: bold;
-        border-radius: 4px;
-        background-color: #007bff;
-        border-color: #007bff;
-        width: 100%;
-    }
-
-    .form-signin .btn-primary:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
-    }
-
-    .form-floating label {
-        font-size: 14px;
-        color: #888;
-        pointer-events: none;
-        left: 10px;
-        top: 10px;
-        transition: top 0.5s, left 0.5s, font-size 0.5s;
-    }
-
-    .form-floating .form-control:focus + label,
-    .form-floating .form-control:not(:placeholder-shown) + label {
-        top: -12px;
-        left: 8px;
-        font-size: 12px;
-        color: #007bff;
-    }
-
-    .form-floating .form-control {
-        padding: 28px 8px 8px 8px;
-    }
-
-    /* Diğer stiller */
-    .alert {
-        margin-top: 20px;
-    }
-
-    .text-muted {
-        text-align: center;
-        font-size: 12px;
-        color: #888;
-    }
-
-    .form-signin .remember-me {
-        margin-bottom: 15px;
-        font-size: 14px;
-        color: #666;
-    }
-
-    .form-signin .remember-me input {
-        margin-right: 10px;
-    }
-
-    .form-signin .form-title {
-        font-size: 48px;
-        margin-bottom: 25px;
-        color: #fff;
-        text-align: right;
-        padding-right: 20px;
-    }
-</style>
 
 <div style="display: flex;">
     <div style="width: 40%; display: flex; flex-direction: column; justify-content: center; text-align: right; padding-right: 20px;">
@@ -111,36 +19,67 @@
         </p>
     </div>
 
-    <div style="width: 60%;">
-        <main class="form-signin">
-            <form asp-controller="Auth" asp-action="Login" method="post">
-                <h1 class="h3 mb-3 fw-normal" style="color: #000;">Lütfen Giriş Yap</h1>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <main style="width: 400px; padding: 15px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <form asp-controller="Auth" asp-action="Login" method="post" style="display: flex; flex-direction: column; gap: 20px;">
+                <h1 style="font-size: 24px; margin-bottom: 20px; text-align: center; color: #000;">Lütfen Giriş Yap</h1>
 
                 @if (ViewBag.Message != null)
                 {
                     <div class="alert alert-danger">@ViewBag.Message</div>
                 }
 
-                <div class="form-floating">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="orionpos@orionpos.com.tr" asp-for="Email">
-                    <label for="floatingInput">Email Adresi</label>
+                <div style="position: relative;">
+                    <input type="email" class="form-control" id="floatingInput" placeholder=" " asp-for="Email" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ccc;">
+                    <label for="floatingInput" id="emailLabel" style="position: absolute; top: 10px; left: 10px; font-size: 14px; color: #888; transition: all 0.3s;">Email Adresi</label>
                 </div>
-                <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Şifre" asp-for="Password">
-                    <label for="floatingPassword">Şifre</label>
+
+                <div style="position: relative;">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder=" " asp-for="Password" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ccc;">
+                    <label for="floatingPassword" id="passwordLabel" style="position: absolute; top: 10px; left: 10px; font-size: 14px; color: #888; transition: all 0.3s;">Şifre</label>
                 </div>
 
                 <div class="remember-me">
-                    <label>
+                    <label style="color: #000;">
                         <input type="checkbox" asp-for="RememberMe"> Beni Hatırla
                     </label>
                 </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Giriş Yap</button>
-                <p class="mt-5 mb-3 text-muted">&copy; 2023–2024</p
+
+                <button class="btn btn-lg btn-primary" type="submit" style="padding: 12px 20px; font-weight: bold; border-radius: 4px; background-color: #4caf50; border-color: #4caf50;">Giriş Yap</button>
+                <button class="btn btn-lg btn-primary" asp-controller="Auth" asp-action="Register" type="submit" style="padding: 12px 20px; font-weight: bold; border-radius: 4px; background-color: #4caf50; border-color: #4caf50;">Kaydol</button>
+
+                <p style="margin-top: 20px; font-size: 12px; color: #888; text-align: center;">&copy; 2023–2024</p>
             </form>
         </main>
     </div>
+
 </div>
+
+
+
+<script>
+    // JavaScript kullanarak ipucu yazıları gizleme ve gösterme işlevleri
+    const emailInput = document.getElementById('floatingInput');
+    const passwordInput = document.getElementById('floatingPassword');
+    const emailLabel = document.getElementById('emailLabel');
+    const passwordLabel = document.getElementById('passwordLabel');
+
+    emailInput.addEventListener('input', function () {
+        if (this.value !== '') {
+            emailLabel.style.visibility = 'hidden';
+        } else {
+            emailLabel.style.visibility = 'visible';
+        }
+    });
+
+    passwordInput.addEventListener('input', function () {
+        if (this.value !== '') {
+            passwordLabel.style.visibility = 'hidden';
+        } else {
+            passwordLabel.style.visibility = 'visible';
+        }
+    });
+</script>
 
 
 

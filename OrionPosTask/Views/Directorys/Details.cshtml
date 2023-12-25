@@ -1,0 +1,37 @@
+﻿@model OrionPosTask.Models.Data.Directorys
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="card bg-secondary text-light">
+    <h4 class="card-header">Detaylar</h4>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">
+                Ad
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-3">
+                Soyad
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Surname)
+            </dd>
+            <dt class="col-sm-3">
+                Telefon
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Telephone)
+            </dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Düzenle</a> |
+        <a asp-action="Index" class="btn btn-secondary">Listeye Geri Dön</a>
+    </div>
+</div>
+

@@ -2,26 +2,25 @@
 
 namespace OrionPosTask.Models.Data
 {
-    public class User
+    public class User : IBaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
-        [Required]
+        
         [MaxLength(50)]
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Geçersiz Şifre veya hatalı giriş.")]
         [MaxLength(100)]
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
-        [Required]
+        public bool RememberMe { get; set; }
+
+        [Required(ErrorMessage = "Geçersiz Eposta veya hatalı giriş.")]
         [EmailAddress]
         [MaxLength(100)]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [MaxLength(50)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 
 }

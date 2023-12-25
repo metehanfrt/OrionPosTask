@@ -2,4 +2,53 @@
     ViewData["Title"] = "Home Page";
 }
 
-<partial name="_Navbar" />
+
+<br/>
+<br/>
+<br />
+<div class="text-center">
+    <h1 class="display-4">
+        ORİONPOS TASK
+        @(Helper.Base64Decode(Context.Request.Cookies["KullaniciAdi"]) ?? Context.Session.GetString("KullaniciAdi"))
+    </h1>
+    <p><a href="https://github.com/metehanfrt">Telefon rehberi MVC uygulaması</a></p>
+    <p><a href="https://www.canva.com/design/DAF2ytZZa5A/4FQV4lSzwb-61ns0VfV3rw/view?utm_content=DAF2ytZZa5A&utm_campaign=designshare&utm_medium=link&utm_source=editor">Özgeçmiş</a></p>
+    <p><a href="https://api.whatsapp.com/send?phone=+905373548639">WhatsApp ile iletişime geçin</a></p>
+    <p><a href="tel:+905373548639">Aramak için tıklayın: +905373548639</a></p>
+
+</div>
+
+@if (Context.Session.GetInt32("Gosterim") <= 1)
+{
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color: black; id="staticBackdropLabel">Bilgilendirme</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="color: black;">
+                    <p>Projeme hoşgeldiniz</p>
+                    <p>Detaylı açıklamalarımı ve iletişim bilgilerimi ana sayfamda görebilir tıklayarak ulaşabilirsiniz</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @if (Context.Session.GetInt32("Gosterim") <= 1)
+    {
+        <text>
+            <script>
+                var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {
+                    keyboard: false
+                });
+                myModal.show()
+            </script>
+        </text>
+    }
+}

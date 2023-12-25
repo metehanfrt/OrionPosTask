@@ -32,8 +32,19 @@ namespace OrionPosTask.Models.Seeding
                     Password = "Mk@1977!",
                     Email = "cansu.karlı@orionpos.com.tr",
                     Name = "Cansu Karlı"
+                },
+                new User()
+                {
+                    Id=4,
+                    UserName = "metehanfrt",
+                    Password = "Mk@1977!",
+                    Email = "metehanfrt@gmail.com",
+                    Name = "Metehan Fırat"
                 }
             };
+            //Entity özelliği seed işlemi yapıyor
+            modelBuilder.Entity<User>().HasData(initialUsers);
+
         }
     }
 }

@@ -1,0 +1,48 @@
+﻿@model User
+
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card card-theme">
+                <div class="card-header">Kaydol</div>
+                <div class="card-body">
+                    <form asp-action="Register">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="UserName" class="control-label" style="color: black;">Kullanıcı Adı</label>
+                            <span asp-validation-for="UserName" class="text"></span>
+                            <input asp-for="UserName" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label" style="color: black;">Email</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <input asp-for="Email" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label" style="color: black;">Şifre</label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                            <input asp-for="Password" class="form-control" type="password" />
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input type="submit" value="Kaydol" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />

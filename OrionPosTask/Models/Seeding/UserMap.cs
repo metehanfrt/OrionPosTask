@@ -9,8 +9,10 @@ public class UserMap : IEntityTypeConfiguration<User>
         builder.ToTable("User"); // Tablo adını belirleme
 
         builder
-            .Property(x => x.Name) // Özelliği belirleme
-            .IsRequired(); // Zorunlu hale getirme
+    .Property(x => x.Name)
+
+    .HasMaxLength(50);
+
 
         builder
             .Property(x => x.UserName) 
