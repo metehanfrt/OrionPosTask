@@ -28,7 +28,7 @@ namespace OrionPosTask.Controllers
         public async Task<IActionResult> Index(int? page, string searchName, string searchSurname, string searchTelephone)
         {
             int pageSize = 5;
-            //ş
+            
             var query = from p in _context.Directorys where !p.IsDeleted select p; // Sadece silinmemiş olanları seç
 
             int pageNumber = page ?? 1;
