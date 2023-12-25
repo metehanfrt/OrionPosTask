@@ -63,33 +63,37 @@
         var data = @Html.Raw(Json.Serialize(Model));
 
         document.addEventListener("DOMContentLoaded", function () {
-            const inputs = document.querySelectorAll('input[type="text"]');
-            inputs.forEach(input => {
-                input.addEventListener('input', function (e) {
-                    filterTable();
-                });
-            });
+    const inputs = document.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+        input.addEventListener('input', function (e) {
+            filterTable(input.name);
         });
+    });
+});
 
-        function filterTable() {
-            const searchName = document.querySelector('input[name="searchName"]').value.toLowerCase();
-            const searchSurname = document.querySelector('input[name="searchSurname"]').value.toLowerCase();
-            const searchTelephone = document.querySelector('input[name="searchTelephone"]').value.toLowerCase();
+function filterTable(fieldName) {
+    const searchName = document.querySelector('input[name="searchName"]').value.toLowerCase();
+    const searchSurname = document.querySelector('input[name="searchSurname"]').value.toLowerCase();
+    const searchTelephone = document.querySelector('input[name="searchTelephone"]').value.toLowerCase();
 
-            const tableRows = document.querySelectorAll('#tableBody tr');
-            tableRows.forEach(row => {
-                const rowData = row.textContent.toLowerCase() || row.innerText.toLowerCase();
-                const nameMatch = rowData.includes(searchName);
-                const surnameMatch = rowData.includes(searchSurname);
-                const telephoneMatch = rowData.includes(searchTelephone);
+    const tableRows = document.querySelectorAll('#tableBody tr');
+    tableRows.forEach(row => {
+        const rowData = row.textContent.toLowerCase() || row.innerText.toLowerCase();
+        let shouldDisplay = true;
 
-                if (nameMatch && surnameMatch && telephoneMatch) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
+        if (fieldName === 'searchName') {
+            shouldDisplay = rowData.includes(searchName);
+        } else if (fieldName === 'searchSurname') {
+            shouldDisplay = rowData.includes(searchSurname);
+        } else if (fieldName === 'searchTelephone') {
+            shouldDisplay = rowData.includes(searchTelephone);
         }
+
+        row.style.display = shouldDisplay ? '' : 'none';
+    });
+}
+
+
 
         const itemsPerPage = 5;
         let currentPage = 1;
